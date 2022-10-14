@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="row m-2 justify-content-center" >
+    <div class="col-12   col-lg-3 justify-content-center align-items-center ">
+
+        <div class="card p-3"  style="width: 18rem;">
+            <img class="card-img-top" th:src="@{'https://avatars.dicebear.com/api/big-smile/'+${user.id}+'.svg?b=%23a98484&r=50&size=400&scale=110&translateX=-3}" alt="Card image cap">
+            <div class="card-body">
+                <h5  th:text="${user.name+' '+user.surName }" class="card-title text-info text-center"></h5>
+
+                <label th:text="${'Tel: '+user.telephone}"></label>
+                <label th:text="${ 'email: '+user.email}"></label>
+                <label th:text="${'Kullanıcı Türü: '+user.userType}"></label>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-12 col-lg-9  container-fluid ">
+        <div class="row d-flex justify-content-center mx-3 p-1 ">
+            <div th:each="product : ${products}" class="card max-vh-50 col-md-5 m-2 p-2" style="">
+                <div class="card-body ">
+                    <h5 th:text="${product.name}" class="card-title"></h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li th:text="${product.price+'TL'}"  class="list-group-item price">xx</li>
+                    <li th:text="${product.expirationDate}" class="list-group-item">xx</li>
+                </ul>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <label>Like sayısı</label>
+                        <span th:text="${product.getLikes().size()}" class="badge text-bg-info">Info</span>
+                    </div>
+                    <div class="d-flex justify-content-around mt-3">
+
+                        <a type="button" th:if="${!pid.contains(product.id)}"  th:href="'/likemvc/tolike?userId=' + ${user.id} + '&productId=' + ${product.id}"><i style="font-size:2.2rem" class="fa-regular fa-heart"></i></a>
+                        <a type="button" th:if="${pid.contains(product.id)}"  th:href="'/likemvc/delete?userId=' + ${user.id}+'&productId=' + ${product.id}">    <i style="font-size: 2.2rem;color: red" class="fa-solid fa-heart"></i></a>
+
+
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <a class="" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#flush-collapseOne'+product.id}" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <i class="fas fa-comment" style="color: blue; font-size: 2.2rem"></i>
+                                    </a>
+                                </h2>
+                                <div th:id="${'flush-collapseOne'+product.id}" class="mt-5 accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div th:each="pd:${product.getComments()}" class="accordion-body">
+                                        <div class="mb-1 card text-center d-flex justify-content-center" >
+                                            <div class="card-title table-warning" th:text="${pd.user.name}" ></div>
+                                            <div class="card-body" th:text="${pd.getComment()}" ></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                       <a type="button" th:if="${!user.getFavProducts.contains(product.id)} " th:href="'/usermvc/addfav?userId=' + ${user.id} + '&productId=' + ${product.id}" ><i style="font-size: 2.2rem" class="fa-regular fa-star"></i></a>
+                        <a type="button" th:if="${user.getFavProducts.contains(product.id)}" th:href="'/usermvc/deletefav?userId=' + ${user.id} + '&productId=' + ${product.id}" ><i style="font-size: 2.2rem;color: orange"  class="fa-solid fa-star"></i></a>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function deletebyid(id,productId) {
+    console.log(id)
+
+        let findById = "http://localhost:9090/likemvc/delete?userId="+id+"&productId="+productId;
+
+        /*
+        fetch(findAll)
+        .then((response) => response.json()) // gelen datayı json formatına çevir
+        .catch((error) => console.error('Error:', error)) // hatayı dönüyor.
+        .then((data) => console.log(data.message)); // hatalı ya da hatasız tüm sayı dönüyor.
+*/
+
+        axios.get(findById).then((payload)=>{ // 200 olumlıu bir cevap alırsanız döner
+            console.log(payload.data);
+        }).catch(function (error) { // Hata olduğunda dönülen cevap
+            console.log(error.response.data);
+        })
+            .then(function () {
+
+                console.log("işlem tamam");
+            });
+
+    }
+</script>
+
+</body>
+</html>

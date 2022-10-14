@@ -1,0 +1,19 @@
+server:
+  port: 9090
+
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://10.4.0.16:5432/commentAppDb
+    username: postgres
+    password: root
+
+  jpa:
+      hibernate:
+        ddl-auto: update
+        format_sql: true
+      show-sql: true
+
+
+

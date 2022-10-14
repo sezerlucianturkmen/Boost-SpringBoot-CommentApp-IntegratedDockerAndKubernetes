@@ -1,0 +1,82 @@
+﻿@media (max-width:800px) {
+    .topImageInfo {
+        margin: 1em 1em;
+        padding: 0.3rem 0.3rem;
+
+        background-blend-mode: color-dodge;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        justify-content: space-between;
+
+
+    }
+}
+
+.fav::before {
+
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    content: "\f005";
+}
+
+.like::before {
+
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    content: "\f004";
+}
+
+
+.aside {
+    position: relative;
+    border-right: 1px solid black;
+
+}
+
+.list-group-item {
+    border: 0;
+    border-radius: 5px;
+    margin-top: 1rem;
+    padding: 0.5rem;
+
+}
+
+
+.list-group-item a {
+
+
+    text-decoration: none;
+    color: black;
+
+}
+
+.list-group-item:hover {
+
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    color: white;
+    background-color: cadetblue;
+    border-radius: 10px;
+
+}
+
+.nav-item a:hover {
+    color: white;
+}
+.card{
+    height: 30rem!important;
+    box-shadow: 1px 1px 2px 2px #24333C;
+
+}
+.item:hover {
+
+    transform: scale(1.1);
+    transition: ease-in-out 1s;
+    z-index: 5;
+
+}

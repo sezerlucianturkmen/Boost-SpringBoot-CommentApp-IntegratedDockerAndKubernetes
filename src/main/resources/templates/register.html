@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<script>
+
+
+</script>
+<body>
+
+
+<div class="container mt-4 justify-content-center align-items-center  align-self-center">
+  <div class=" register justify-content-center">
+
+    <h2 class="mb-2 text-center font-weight-bolder "> Kayıt Sayfası</h2>
+    <form  method="post" action="register" class="row   mt-1 mx-auto ">
+      <div class="col-12 mb-2">
+        <label for="name" class="form-label">Name</label>
+        <input name="name" type="text" class="form-control" id="name" placeholder="Please enter your name">
+      </div>
+      <div class="col-12 mb-2">
+        <label for="surName" class="form-label">Surname</label>
+        <input name="surName" type="text" class="form-control" id="surName" placeholder="Please enter your Surname">
+      </div>
+      <div class="col-12 mb-2">
+        <label for="email" class="form-label">Email</label>
+        <input name="email" type="email" class="form-control" id="email">
+      </div>
+      <div class="col-12 mb-2">
+        <label for="password" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="password">
+      </div>
+      <div class="col-12 mb-2">
+        <label for="telephone" class="form-label">Telephone</label>
+        <input type="tel" class="form-control" id="telephone">
+      </div>
+      <div class="col-12 mb-2">
+          <label for="userType" class="form-label mr-3">User Type</label>
+          <select  name="userType" id="userType">
+            <div th:each="userType : ${userType}" >
+              <option th:text="${userType}"  th:value="${userType}"></option>
+            </div>
+          </select>
+
+      </div>
+      <div class= "d-flex  col-12 mt-1 mb-2 justify-content-center">
+        <button  type="submit"  class=" font-weight-bold btn btn-warning">Sign in</button>
+      </div>
+    </form>
+
+  </div>
+
+
+</div>
+
+</body>
+</html>

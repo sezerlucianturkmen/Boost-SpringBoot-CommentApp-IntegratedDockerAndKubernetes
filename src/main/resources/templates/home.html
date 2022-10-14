@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/home.css">
+</head>
+<body>
+<header class="">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container mt-0 mx-auto">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Kategoriler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ürünler</a>
+                    </li>
+                    <div class="nav-item dropdown ">
+
+                        <a th:text="${user.name}" class="btn btn-default dropdown-toggle text-white" type="button" id="menu1" data-toggle="dropdown">
+                            </a>
+
+                        <ul class="dropdown-menu text-center" role="menu" aria-labelledby="menu1">
+                            <li class="dropdown-item" role="presentation"><a role="menuitem" th:href="@{/usermvc/getuser(id=${user.id})}" >Detaylar</a></li>
+                            <li role="dropdown-item" class="dropdown-divider"></li>
+                            <li role="dropdown-item"><a role="menuitem"  class="text-black-50 " th:href="${'/login'}" > <span>Çıkış yap</span> <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                        </ul>
+
+                        <img class="rounded" width="40px" th:src="@{'https://avatars.dicebear.com/api/big-smile/'+${user.id}+'.svg?b=%23a98484&r=50&size=400&scale=110&translateX=-3'}" alt="Card image cap">
+                    </div>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+
+<main>
+
+
+    <div class="alert login alert-primary  d-none" role="alert">
+        Giriş Başarısız
+    </div>
+
+
+    <div class="container mt-3 d-flex justify-content-center ">
+
+        <div class="row">
+            <aside class=" aside col-sm-4 col-md-3  p-3">
+
+                <h3 class="sideTitle ">Kategoriler</h3>
+
+                <ul class="list-group  ">
+
+                    <li class="list-group-item "><a class="side-link" href="">Bilgisayar</a></li>
+                    <li class="list-group-item "><a class="side-link" href="">Telefon</a></li>
+                    <li class="list-group-item "><a class="side-link" href="">Tablet</a></li>
+                    <li class="list-group-item "><a class="side-link" href="">PowerBank </a></li>
+                    <li class="list-group-item "><a class="side-link" href="">Klavye</a></li>
+                </ul>
+
+            </aside>
+
+            <div class="col-sm-8 col-md-9">
+                <section>
+                    <div
+                            class="main-header d-flex flex-row justify-content-between flex-wrap align-items-center  m-3">
+
+
+                        <h3 th:text="${products.size()+' Sonuç Bulundu'}"  class="text-center"></h3>
+
+                        <div class="search-form d-flex align-items-center justify-content-between">
+
+                            <input type="text" placeholder="Arama Yapabilirsiniz">
+                            <button class=" btn "> Ara</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-5">
+                        <div th:each="product:${products}"  class="item   col-12 col-md-6 col-lg-4 mt-2">
+                            <div class="card d-flex justify-content-evenly align-items-center">
+                                <img src="https://picsum.photos/id/231/200/200"
+                                     class="card-img-top w-100 img-thumbnail" alt="...">
+                                <div class="card-body">
+                                    <h5 th:text="${product.name}" class="card-title">awar</h5>
+                                    <p th:text="${product.price+' TL'}" class="card-text">100tl</p>
+                                    <p th:text="${'Son kullanma Tarihi '+product.expirationDate}" class="card-text">sssssee</p>
+                                </div>
+                                <div class="m-2">
+
+
+                                        <a type="button" class="fav btn btn-outline-warning"  th:if="${!user.getFavProducts.contains(product.id)} " th:href="'/usermvc/addfav?userId=' + ${user.id} + '&productId=' + ${product.id}" ></i>     </a>
+                                        <a type="button" class=" btn btn-outline-warning"  th:if="${user.getFavProducts.contains(product.id)}" th:href="'/usermvc/deletefav?userId=' + ${user.id} + '&productId=' + ${product.id}" ><i style="color: orange"  class="fa-solid fa-star"></i></a>
+
+
+
+                                        <a  type="button" class="like btn btn-outline-danger" th:if="${!pid.contains(product.id)}"  th:href="'/likemvc/tolike?userId=' + ${user.id} + '&productId=' + ${product.id}"> <span th:text="${product.getLikes().size()}" > </span>      </a>
+                                        <a   type="button" class="like2  btn btn-outline-danger" th:if="${pid.contains(product.id)}"  th:href="'/likemvc/delete?userId=' + ${user.id}+'&productId=' + ${product.id}">  <span th:text="${product.getLikes().size()}" > </span>    <i  style="color: red" class="fa-solid fa-heart"></i></a>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </section>
+
+            </div>
+            <div class="alert-add alert  alert-primary  d-none fix col-sm-2 col-md-2 fixed-bottom" role="alert">
+                Ürün başrıyla Eklendi
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+</main>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function deletebyid(id,productId) {
+    console.log(id)
+
+        let findById = "http://localhost:9090/likemvc/delete?userId="+id+"&productId="+productId;
+
+        /*
+        fetch(findAll)
+        .then((response) => response.json()) // gelen datayı json formatına çevir
+        .catch((error) => console.error('Error:', error)) // hatayı dönüyor.
+        .then((data) => console.log(data.message)); // hatalı ya da hatasız tüm sayı dönüyor.
+*/
+
+        axios.get(findById).then((payload)=>{ // 200 olumlıu bir cevap alırsanız döner
+            console.log(payload.data);
+        }).catch(function (error) { // Hata olduğunda dönülen cevap
+            console.log(error.response.data);
+        })
+            .then(function () {
+
+                console.log("işlem tamam");
+            });
+
+    }
+</script>
+
+</body>
+</html>
